@@ -1,0 +1,425 @@
+/**
+ * Quantum Circuit Builder Styles
+ */
+
+/* Circuit Builder Container */
+.circuit-builder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.circuit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.circuit-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+}
+
+.circuit-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* Gate Palette */
+.gate-palette {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+}
+
+.palette-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--space-2);
+}
+
+.gate-category {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.category-name {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.gate-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Gate Button */
+.gate-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: var(--gate-color, var(--color-surface-hover));
+  border-radius: var(--radius-md);
+  cursor: grab;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  border: 2px solid transparent;
+}
+
+.gate-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.gate-button:active {
+  cursor: grabbing;
+  transform: translateY(0);
+}
+
+.gate-button.selected {
+  border-color: var(--color-text-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-alpha);
+}
+
+.gate-symbol {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  color: white;
+}
+
+.gate-name {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 2px;
+}
+
+/* Circuit Canvas */
+.circuit-canvas {
+  position: relative;
+  background: var(--color-background);
+  border-radius: var(--radius-md);
+  overflow: auto;
+  min-height: 200px;
+}
+
+.circuit-grid {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4);
+}
+
+/* Qubit Wire */
+.qubit-wire {
+  display: flex;
+  align-items: center;
+  height: var(--circuit-cell-size);
+  position: relative;
+}
+
+.wire-label {
+  width: 60px;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  padding-right: var(--space-2);
+  text-align: right;
+}
+
+.wire-line {
+  flex: 1;
+  height: 2px;
+  background: var(--wire-color);
+  position: relative;
+}
+
+.wire-cells {
+  display: flex;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.wire-cell {
+  width: var(--circuit-cell-size);
+  height: var(--circuit-cell-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed transparent;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.wire-cell.drop-target {
+  border-color: var(--color-primary);
+  background: var(--color-primary-alpha);
+}
+
+/* Gate Block on Circuit */
+.gate-block {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: var(--gate-size);
+  height: var(--gate-size);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  user-select: none;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  z-index: 1;
+}
+
+.gate-block:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+.gate-block.selected {
+  box-shadow: 0 0 0 3px var(--color-text-primary);
+}
+
+.gate-block .gate-symbol {
+  font-size: var(--text-base);
+}
+
+.gate-block .gate-angle {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: var(--font-mono);
+}
+
+/* Control Line (for CNOT, CZ, etc.) */
+.control-line {
+  position: absolute;
+  width: 2px;
+  background: #2C3E50;
+  z-index: 0;
+}
+
+.control-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #2C3E50;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+/* SWAP Symbol */
+.swap-symbol {
+  font-size: calc(var(--gate-size) * 0.6);
+  font-weight: bold;
+  color: #2C3E50;
+}
+
+/* Measurement Results */
+.measurement-results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.results-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+}
+
+.winning-state {
+  font-family: var(--font-mono);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-quantum-purple);
+  color: white;
+  border-radius: var(--radius-md);
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Probability Histogram */
+.histogram {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.histogram-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.bar-label {
+  width: 80px;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  text-align: right;
+}
+
+.bar-container {
+  flex: 1;
+  height: 24px;
+  background: var(--color-background);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: var(--radius-sm);
+  transition: width var(--transition-slow);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: var(--space-2);
+}
+
+.bar-fill.won { background: var(--color-win); }
+.bar-fill.lost { background: var(--color-loss); }
+.bar-fill.draw { background: var(--color-draw); }
+.bar-fill.winner { animation: glow 2s ease-in-out infinite; }
+
+.bar-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: white;
+  font-weight: var(--font-medium);
+}
+
+.bar-info {
+  width: 100px;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Game Eliminator Animation */
+.game-eliminator {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.eliminated-game {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  opacity: 0.5;
+  text-decoration: line-through;
+  animation: eliminateFade 0.5s ease-out forwards;
+}
+
+@keyframes eliminateFade {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(0.95);
+    filter: grayscale(0.8);
+  }
+}
+
+.survivor-game {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(155, 89, 182, 0.2) 100%);
+  border: 2px solid var(--color-quantum-purple);
+  border-radius: var(--radius-lg);
+  animation: glow 2s ease-in-out infinite;
+}
+
+.survivor-label {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.survivor-id {
+  font-family: var(--font-mono);
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--color-quantum-purple);
+}
+
+/* Preset Circuits */
+.preset-circuits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--color-background);
+  border-radius: var(--radius-md);
+}
+
+.preset-button {
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.preset-button:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-text-primary);
+}
+
+/* Strategy Hint */
+.strategy-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: rgba(74, 144, 217, 0.1);
+  border-left: 3px solid var(--color-primary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.hint-icon {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.hint-text {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+.hint-text code {
+  color: var(--color-quantum-purple);
+  background: rgba(155, 89, 182, 0.15);
+}

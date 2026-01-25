@@ -1,0 +1,287 @@
+/**
+ * Game Component Styles
+ */
+
+/* Game Grid Layout */
+.game-grid {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  justify-content: center;
+  align-items: start;
+}
+
+.game-grid.cols-2 { grid-template-columns: repeat(2, auto); }
+.game-grid.cols-4 { grid-template-columns: repeat(4, auto); }
+.game-grid.cols-8 { grid-template-columns: repeat(8, auto); }
+
+/* Single Game Container */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 2px solid transparent;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.game-container:hover {
+  border-color: var(--color-border-light);
+}
+
+.game-container.active {
+  border-color: var(--color-primary);
+}
+
+.game-container.won {
+  border-color: var(--color-win);
+  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(39, 174, 96, 0.1) 100%);
+}
+
+.game-container.lost {
+  border-color: var(--color-loss);
+  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(231, 76, 60, 0.1) 100%);
+}
+
+.game-container.draw {
+  border-color: var(--color-draw);
+  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(243, 156, 18, 0.1) 100%);
+}
+
+.game-container.eliminated {
+  opacity: 0.4;
+  filter: grayscale(0.8);
+  transform: scale(0.95);
+}
+
+/* Game Header */
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--space-2);
+}
+
+.game-id {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.game-state {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-quantum-purple);
+  padding: var(--space-1) var(--space-2);
+  background: rgba(155, 89, 182, 0.15);
+  border-radius: var(--radius-sm);
+}
+
+/* Tic-Tac-Toe Board */
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--cell-gap);
+  background: var(--color-border);
+  padding: var(--cell-gap);
+  border-radius: var(--radius-md);
+}
+
+.ttt-board.size-sm {
+  width: var(--board-size-sm);
+  height: var(--board-size-sm);
+}
+
+.ttt-board.size-md {
+  width: var(--board-size-md);
+  height: var(--board-size-md);
+}
+
+.ttt-board.size-lg {
+  width: var(--board-size-lg);
+  height: var(--board-size-lg);
+}
+
+/* Board Cell */
+.ttt-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  user-select: none;
+}
+
+.ttt-cell:hover:not(.occupied):not(.disabled) {
+  background: var(--color-surface-hover);
+}
+
+.ttt-cell:active:not(.occupied):not(.disabled) {
+  transform: scale(0.95);
+}
+
+.ttt-cell.disabled {
+  cursor: not-allowed;
+}
+
+.ttt-cell.occupied {
+  cursor: default;
+}
+
+.ttt-cell.winning {
+  background: rgba(39, 174, 96, 0.2);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* Cell Marks */
+.cell-mark {
+  font-weight: var(--font-bold);
+  line-height: 1;
+}
+
+.cell-mark.x {
+  color: var(--color-player-x);
+}
+
+.cell-mark.o {
+  color: var(--color-player-o);
+}
+
+.ttt-board.size-sm .cell-mark { font-size: calc(var(--board-size-sm) / 5); }
+.ttt-board.size-md .cell-mark { font-size: calc(var(--board-size-md) / 5); }
+.ttt-board.size-lg .cell-mark { font-size: calc(var(--board-size-lg) / 5); }
+
+/* Game Status */
+.game-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+}
+
+.game-status.playing {
+  color: var(--color-text-secondary);
+}
+
+.game-status.won {
+  color: var(--color-win);
+}
+
+.game-status.lost {
+  color: var(--color-loss);
+}
+
+.game-status.draw {
+  color: var(--color-draw);
+}
+
+.status-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Score Display */
+.score-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+}
+
+.score-label {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.score-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-4xl);
+  font-weight: var(--font-bold);
+  color: var(--color-text-primary);
+}
+
+.score-value.positive {
+  color: var(--color-win);
+}
+
+.score-value.negative {
+  color: var(--color-loss);
+}
+
+.score-change {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  animation: fadeIn var(--transition-normal);
+}
+
+.score-change.positive {
+  color: var(--color-win);
+  background: rgba(39, 174, 96, 0.2);
+}
+
+.score-change.negative {
+  color: var(--color-loss);
+  background: rgba(231, 76, 60, 0.2);
+}
+
+/* Game Stats */
+.game-stats {
+  display: flex;
+  gap: var(--space-6);
+  padding: var(--space-3);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+}
+
+.stat-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.stat-item.wins .stat-value { color: var(--color-win); }
+.stat-item.losses .stat-value { color: var(--color-loss); }
+.stat-item.draws .stat-value { color: var(--color-draw); }
+
+/* Turn Indicator */
+.turn-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+}
+
+.turn-indicator .player-mark {
+  font-weight: var(--font-bold);
+}
+
+.turn-indicator .player-mark.x { color: var(--color-player-x); }
+.turn-indicator .player-mark.o { color: var(--color-player-o); }
