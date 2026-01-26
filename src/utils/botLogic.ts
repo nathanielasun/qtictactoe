@@ -202,16 +202,21 @@ export function getBotMoveWeighted(
   }
 
   // Calculate weights based on leniency
-  // At low leniency, heavily favor best moves
-  // At high leniency, flatten the distribution
+  // At 0% leniency: use exponential weights heavily favoring best move
+  // At 100% leniency: uniform distribution (all moves equally likely)
   const leniencyFactor = config.leniency / 100;
 
   const weights = rankedMoves.map((_, index) => {
-    // Base weight: best move gets highest weight
-    const baseWeight = rankedMoves.length - index;
-    // Flatten based on leniency
-    const flattenedWeight = baseWeight + leniencyFactor * rankedMoves.length;
-    return flattenedWeight;
+    // Base weight using exponential decay: best move gets weight n, then n/2, n/4, etc.
+    // This creates strong preference for better moves at low leniency
+    const exponentialWeight = Math.pow(2, rankedMoves.length - 1 - index);
+
+    // Uniform weight (all moves equal)
+    const uniformWeight = 1;
+
+    // Blend between exponential (strategic) and uniform (random) based on leniency
+    // Low leniency = more exponential, high leniency = more uniform
+    return exponentialWeight * (1 - leniencyFactor) + uniformWeight * leniencyFactor;
   });
 
   // Normalize weights to probabilities

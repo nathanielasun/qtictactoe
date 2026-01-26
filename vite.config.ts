@@ -7,12 +7,9 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      // Alias for qcjs package from parent directory
-      'qcjs': path.resolve(__dirname, '../qcjs'),
     },
   },
   optimizeDeps: {
-    // Include qcjs in dependency optimization
     include: ['react', 'react-dom', 'lucide-react'],
   },
   server: {
@@ -22,5 +19,6 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
+    target: 'esnext', // Support top-level await in qcjs
   },
 });

@@ -2,32 +2,37 @@
  * Leaderboard TypeScript type definitions.
  */
 
+/** Collapse mode for scoring */
+import type { CollapseMode } from './game';
+
 /** A single leaderboard entry */
 export interface LeaderboardEntry {
   /** Unique ID */
   id: string;
   /** Player's name */
   name: string;
-  /** Final score after quantum elimination */
+  /** Final score after quantum collapse */
   score: number;
   /** Number of qubits used */
   numQubits: number;
   /** Number of games played (2^n) */
   numGames: number;
+  /** Number of survivors (2^(n-1)) */
+  numSurvivors: number;
   /** Bot leniency setting (0-100) */
   botLeniency: number;
-  /** Games won */
+  /** Collapse mode used */
+  collapseMode: CollapseMode;
+  /** Games won (among survivors) */
   gamesWon: number;
-  /** Games lost */
+  /** Games lost (among survivors) */
   gamesLost: number;
-  /** Games drawn */
+  /** Games drawn (among survivors) */
   gamesDrawn: number;
-  /** Raw score before quantum elimination */
+  /** Raw score before quantum collapse (all games) */
   rawScore: number;
-  /** Winning quantum state */
-  winningState: string;
-  /** Survivor game index */
-  survivorGame: number;
+  /** Survivor game indices */
+  survivorGames: number[];
   /** Date of score submission */
   date: string;
   /** Game duration in seconds */
@@ -63,12 +68,12 @@ export function createLeaderboardEntry(
   score: number,
   numQubits: number,
   botLeniency: number,
+  collapseMode: CollapseMode,
   gamesWon: number,
   gamesLost: number,
   gamesDrawn: number,
   rawScore: number,
-  winningState: string,
-  survivorGame: number,
+  survivorGames: number[],
   duration: number
 ): LeaderboardEntry {
   return {
@@ -77,13 +82,14 @@ export function createLeaderboardEntry(
     score,
     numQubits,
     numGames: Math.pow(2, numQubits),
+    numSurvivors: Math.pow(2, numQubits - 1),
     botLeniency,
+    collapseMode,
     gamesWon,
     gamesLost,
     gamesDrawn,
     rawScore,
-    winningState,
-    survivorGame,
+    survivorGames,
     date: new Date().toISOString(),
     duration,
   };

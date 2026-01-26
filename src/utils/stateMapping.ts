@@ -173,6 +173,17 @@ export function getStrategyHint(games: TicTacToeGame[], n: number): string {
     `Apply ${xGates.join(' and ')} to select state |${state}⟩.`;
 }
 
+/** Histogram bar data for visualization */
+export interface HistogramBar {
+  state: string;
+  gameIndex: number;
+  count: number;
+  probability: number;
+  gameOutcome: 'won' | 'lost' | 'draw';
+  gamePoints: number;
+  isWinningState: boolean;
+}
+
 /**
  * Build histogram data from measurement counts.
  * @param counts - Measurement counts for each state
@@ -186,15 +197,7 @@ export function buildHistogramData(
   games: TicTacToeGame[],
   shots: number,
   winningState: string
-): Array<{
-  state: string;
-  gameIndex: number;
-  count: number;
-  probability: number;
-  outcome: 'won' | 'lost' | 'draw';
-  points: number;
-  isWinner: boolean;
-}> {
+): HistogramBar[] {
   return Object.entries(counts)
     .map(([state, count]) => {
       const gameIndex = stateToGameIndex(state);
@@ -208,9 +211,9 @@ export function buildHistogramData(
         gameIndex,
         count,
         probability: count / shots,
-        outcome,
-        points,
-        isWinner: state === winningState,
+        gameOutcome: outcome,
+        gamePoints: points,
+        isWinningState: state === winningState,
       };
     })
     .sort((a, b) => b.count - a.count);

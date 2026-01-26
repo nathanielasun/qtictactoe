@@ -1,0 +1,3 @@
+[submodule "src/lib/qcjs"]
+	path = src/lib/qcjs
+	url = https://github.com/nathanielasun/qcjs

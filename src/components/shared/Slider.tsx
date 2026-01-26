@@ -60,33 +60,43 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
             )}
           </div>
         )}
-        <div className="slider-track-container">
-          <input
-            ref={ref}
-            type="range"
-            id={inputId}
-            value={value}
-            min={min}
-            max={max}
-            step={step}
-            onChange={handleChange}
-            className="slider-input"
+        <div className="slider-wrapper">
+          <div
+            className="slider-track-container"
             style={
               {
-                '--slider-percentage': `${percentage}%`,
+                '--slider-percentage': percentage,
               } as React.CSSProperties
             }
-            {...props}
-          />
+          >
+            {/* Track background */}
+            <div className="slider-track" aria-hidden="true" />
+            {/* Track fill */}
+            <div className="slider-fill" aria-hidden="true" />
+            {/* Actual input */}
+            <input
+              ref={ref}
+              type="range"
+              id={inputId}
+              value={value}
+              min={min}
+              max={max}
+              step={step}
+              onChange={handleChange}
+              className="slider-input"
+              {...props}
+            />
+          </div>
           {marks && marks.length > 0 && (
             <div className="slider-marks">
               {marks.map((mark) => {
                 const markPercentage = ((mark.value - min) / (max - min)) * 100;
+                // Account for thumb width (20px) - marks align with thumb center positions
                 return (
                   <div
                     key={mark.value}
                     className="slider-mark"
-                    style={{ left: `${markPercentage}%` }}
+                    style={{ left: `calc(10px + ${markPercentage} * (100% - 20px) / 100)` }}
                   >
                     <span className="slider-mark-label">{mark.label}</span>
                   </div>

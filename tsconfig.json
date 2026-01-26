@@ -23,9 +23,7 @@
     /* Paths */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "qcjs": ["../qcjs/index.js"],
-      "qcjs/*": ["../qcjs/*"]
+      "@/*": ["src/*"]
     }
   },
   "include": ["src"],
