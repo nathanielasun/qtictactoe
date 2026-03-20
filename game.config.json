@@ -1,0 +1,12 @@
+{
+  "slug": "qtictactoe",
+  "title": "qtictactoe",
+  "description": "Tic-tac-toe, with a touch of quantum mechanics",
+  "type": "react",
+  "entry": "src/index.tsx",
+  "thumbnail": "thumbnail.png",
+  "tags": ["strategy", "singleplayer", "multiplayer"],
+  "minPlayers": 1,
+  "maxPlayers": 2,
+  "version": "1.0.0"
+}
